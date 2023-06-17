@@ -1,5 +1,8 @@
 package com.fluidnotions.autorest.exceptions;
 
+import com.fluidnotions.autorest.search.SearchGenericCriteriaController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseEntity<?> handleException(Exception ex) {
@@ -21,6 +25,8 @@ public class GlobalExceptionHandler {
         }
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        return new ResponseEntity<>(ex.getMessage(), headers, status);
+        var exceptionResponse = new ResponseEntity<>(ex.getMessage(), headers, status);
+        logger.debug("Exception response: {}", exceptionResponse);
+        return exceptionResponse;
     }
 }

@@ -35,7 +35,7 @@ public class RepositoryRestConfig {
                         if (lastDotIndex != -1) {
                             packageName = canonicalName.substring(0, lastDotIndex);
                         }
-                        logger.info("packageName: {}", packageName);
+                        logger.trace("packageName: {}", packageName);
                         return restRepoPackage.equals(packageName);
                     }
                 });

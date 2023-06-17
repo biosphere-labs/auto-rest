@@ -1,7 +1,5 @@
 package com.fluidnotions.autorest.exceptions;
 
-
-
 import org.springframework.http.HttpStatus;
 
 public class HttpResponseException extends Exception {

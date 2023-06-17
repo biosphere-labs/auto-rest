@@ -1,11 +1,11 @@
 package com.fluidnotions.autorest.search;
 
-import com.fluidnotions.autorest.exceptions.HttpResponseException;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fluidnotions.autorest.exceptions.HttpResponseException;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -17,10 +17,12 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -63,7 +65,7 @@ public class SearchGenericCriteriaController {
                  Optional<Map<String, String>> notLike,
                  Optional<Map<String, String>> in,
                  Optional<Map<String, String>> notIn) {
-        public void validate() throws HttpResponseException {
+        public void validate() {
             List<OptionalWithFieldName> options = List.of(new OptionalWithFieldName("like", like), new OptionalWithFieldName("notLike", notLike), new OptionalWithFieldName("in", in), new OptionalWithFieldName("notIn", notIn));
             for (OptionalWithFieldName option : options) {
                 if (option.optional().isPresent()) {
@@ -108,7 +110,7 @@ public class SearchGenericCriteriaController {
         return json;
     }
 
-    private List<?> searchEntities(Class<?> domainClass, EntityManager entityManager, Search search) throws HttpResponseException {
+    private List<?> searchEntities(Class<?> domainClass, EntityManager entityManager, Search search) {
 
         search.validate();
         search.where().validate();
